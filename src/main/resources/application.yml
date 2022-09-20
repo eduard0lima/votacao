@@ -1,0 +1,44 @@
+votacao:
+  url-validacao-cpf: https://user-info.herokuapp.com/users/
+---
+server:
+  port: 8080
+---
+spring:
+  application:
+    name:
+---
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+---
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://localhost:5555/testdb
+    username: postgres
+    password: postgres
+    hikari:
+      auto-commit: false
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        temp:
+          use_jdbc_metadata_defaults: false
+        default_schema: public
+---
+spring:
+  flyway:
+    enabled: true
+    url: jdbc:postgresql://localhost:5555/testdb
+    user: postgres
+    password: postgres
+    locations: classpath:db/migration
+    schemas: public
+    baseline-on-migrate: true
+    table: flyway_schema_history
+    clean-on-validation-error: true
